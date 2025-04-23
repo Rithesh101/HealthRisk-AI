@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthRisk AI - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-heartbeat">❤️</i>
+                <h1>HealthRisk AI</h1>
+            </div>
+            <p class="tagline">Early disease detection through AI-powered analysis</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="intro-section">
+            <h2>Welcome to HealthRisk AI</h2>
+            <p>Select a disease below to assess your risk using our AI models.</p>
+        </section>
+
+        <section class="form-section">
+            <div class="form-card" style="text-align: center;">
+                <a href="/diabetes" class="btn btn-primary" style="margin: 10px;">Diabetes Risk</a>
+                <a href="/heart" class="btn btn-primary" style="margin: 10px;">Heart Disease Risk</a>
+                <a href="/cancer" class="btn btn-primary" style="margin: 10px;">Breast Cancer Risk</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 HealthRisk AI. All rights reserved.</p>
+            <p class="disclaimer">This tool is for educational purposes only and should not replace professional medical advice.</p>
+        </div>
+    </footer>
+</body>
+</html>

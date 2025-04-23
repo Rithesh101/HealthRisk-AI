@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthRisk AI - Disease Risk Assessment</title>
+    <style>
+        /* Base styles and resets */
+        :root {
+            --primary-color: #4a6fa5;
+            --primary-dark: #385580;
+            --secondary-color: #e67e22;
+            --accent-color: #4ECDC4;
+            --text-color: #333;
+            --light-text: #666;
+            --very-light-text: #999;
+            --border-color: #e1e1e1;
+            --card-bg: #fff;
+            --light-bg: #f9f9f9;
+            --danger-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --info-color: #3498db;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            margin-bottom: 0.5em;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        p {
+            margin-bottom: 1em;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .logo h1 {
+            margin-bottom: 0;
+            font-size: 1.8rem;
+        }
+
+        .tagline {
+            margin-top: 5px;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Main content */
+        main {
+            padding: 40px 0;
+        }
+
+        section {
+            margin-bottom: 30px;
+        }
+
+        .intro-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Form styles */
+        .form-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-info {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        /* Button styles */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: center;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background-color: #f1f1f1;
+            color: var(--text-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e5e5e5;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #f1f1f1;
+            color: var(--light-text);
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .disclaimer {
+            font-size: 0.9rem;
+            color: var(--very-light-text);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-heartbeat">❤️</i>
+                <h1>HealthRisk AI</h1>
+            </div>
+            <p class="tagline">Early disease detection through AI-powered analysis</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="intro-section">
+            <h2>Disease Risk Assessment</h2>
+            <p>Please select a condition and enter your health parameters for an AI-powered risk assessment.</p>
+        </section>
+
+        <section class="form-section">
+            <div class="form-card">
+                <form id="healthForm">
+                    <div class="form-group">
+                        <label for="diseaseSelect">Select Condition</label>
+                        <select id="diseaseSelect">
+                            <option value="" disabled selected>Choose a condition</option>
+                            <option value="diabetes">Diabetes</option>
+                            <option value="heart">Heart Disease</option>
+                            <option value="kidney">Breast Cancer</option>
+                        </select>
+                    </div>
+
+                    <div id="dynamicFields">
+                        <div class="form-info">
+                            <h3 id="diseaseTitle">Diabetes Risk Assessment</h3>
+                            <p id="diseaseDescription">Please enter your health parameters to assess your diabetes risk.</p>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="feature1">Glucose Level (mg/dL)</label>
+                                <input type="number" id="feature1" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="feature2">BMI</label>
+                                <input type="number" id="feature2" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="feature3">Blood Pressure (mmHg)</label>
+                                <input type="number" id="feature3" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="feature4">Insulin (µU/mL)</label>
+                                <input type="number" id="feature4" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="feature5">Age (years)</label>
+                                <input type="number" id="feature5" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="feature6">Skin Thickness (mm)</label>
+                                <input type="number" id="feature6" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="feature7">Pregnancies (number)</label>
+                                <input type="number" id="feature7" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="feature8">DiabetesPedigree</label>
+                                <input type="number" id="feature8" step="0.01">
+                            </div>
+                        </div>
+
+
+
+                            <div class="form-grid condition-fields" id="heartFields" style="display: none;">
+        <div class="form-group"><label>Age (years)</label><input type="number" step="0.01"></div>
+        <div class="form-group"><label>Sex (1 = Male, 0 = Female)</label><input type="number"></div>
+        <div class="form-group"><label>Chest Pain Type (0–3)</label><input type="number"></div>
+        <div class="form-group"><label>Resting Blood Pressure</label><input type="number"></div>
+        <div class="form-group"><label>Cholesterol (mg/dL)</label><input type="number"></div>
+        <div class="form-group"><label>Fasting Blood Sugar (>120 mg/dL: 1, else 0)</label><input type="number"></div>
+        <div class="form-group"><label>Resting ECG (0–2)</label><input type="number"></div>
+        <div class="form-group"><label>Max Heart Rate Achieved</label><input type="number"></div>
+        <div class="form-group"><label>Exercise Induced Angina (1 = Yes, 0 = No)</label><input type="number"></div>
+        <div class="form-group"><label>Oldpeak (ST Depression)</label><input type="number" step="0.01"></div>
+        <div class="form-group"><label>Slope (0–2)</label><input type="number"></div>
+        <div class="form-group"><label>Major Vessels Colored (0–3)</label><input type="number"></div>
+        <div class="form-group"><label>Thalassemia (1, 2, 3)</label><input type="number"></div>
+    </div>
+
+
+
+<div class="form-grid condition-fields" id="cancerFields" style="display: none;">
+    <div class="form-group"><label>Radius Mean</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Texture Mean</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Perimeter Mean</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Area Mean</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Smoothness Mean</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Compactness Mean</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Concavity Mean</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Concave Points Mean</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Symmetry Mean</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Fractal Dimension Mean</label><input type="number" step="0.01"></div>
+
+    <div class="form-group"><label>Radius SE</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Texture SE</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Perimeter SE</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Area SE</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Smoothness SE</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Compactness SE</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Concavity SE</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Concave Points SE</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Symmetry SE</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Fractal Dimension SE</label><input type="number" step="0.01"></div>
+
+    <div class="form-group"><label>Radius Worst</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Texture Worst</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Perimeter Worst</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Area Worst</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Smoothness Worst</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Compactness Worst</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Concavity Worst</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Concave Points Worst</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Symmetry Worst</label><input type="number" step="0.01"></div>
+    <div class="form-group"><label>Fractal Dimension Worst</label><input type="number" step="0.01"></div>
+</div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Calculate Risk</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 HealthRisk AI. All rights reserved.</p>
+            <p class="disclaimer">This tool is for educational purposes only and should not replace professional medical advice.</p>
+        </div>
+    </footer>
+
+
+
+    <script>
+    const diseaseSelect = document.getElementById('diseaseSelect');
+    const title = document.getElementById('diseaseTitle');
+    const desc = document.getElementById('diseaseDescription');
+    const diabetesFields = document.getElementById('diabetesFields');
+    const heartFields = document.getElementById('heartFields');
+    const cancerFields = document.getElementById('cancerFields');
+    
+
+
+    diseaseSelect.addEventListener('change', function () {
+        const value = this.value;
+          title.textContent = 
+        value === "heart" ? "Heart Disease Risk Assessment" : 
+        value === "cancer" ? "Cancer Risk Assessment" : 
+        "Diabetes Risk Assessment";
+
+    desc.textContent = 
+        value === "heart" ? "Please enter your health parameters to assess your heart disease risk." :
+        value === "cancer" ? "Please enter your health parameters to assess your breast cancer risk." :
+        "Please enter your health parameters to assess your diabetes risk.";
+
+    diabetesFields.style.display = (value === "diabetes") ? "grid" : "none";
+    heartFields.style.display = (value === "heart") ? "grid" : "none";
+    cancerFields.style.display = (value === "cancer") ? "grid" : "none";
+});
+</script>
+
+</body>
+</html>

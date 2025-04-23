@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthRisk AI - Diabetes Risk</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-heartbeat">❤️</i>
+                <h1>HealthRisk AI</h1>
+            </div>
+            <p class="tagline">Early disease detection through AI-powered analysis</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="intro-section">
+            <h2>Diabetes Risk Assessment</h2>
+            <p>Enter your health data below to predict your diabetes risk.</p>
+        </section>
+
+        <section class="form-section">
+            <div class="form-card">
+                <form action="{{ url_for('diabetes') }}" method="POST">
+                    <div class="form-info">
+                        <h3>Health Parameters</h3>
+                        <p>All fields are required for accurate prediction.</p>
+                    </div>
+
+                    <div class="form-grid">
+                        {% for label, name in [
+                            ("Glucose Level (mg/dL)", "glucose"),
+                            ("BMI", "bmi"),
+                            ("Blood Pressure (mmHg)", "bp"),
+                            ("Insulin (µU/mL)", "insulin"),
+                            ("Age (years)", "age"),
+                            ("Skin Thickness (mm)", "skin"),
+                            ("Pregnancies (count)", "pregnancies"),
+                            ("Diabetes Pedigree Function", "dpf")
+                        ] %}
+                        <div class="form-group">
+                            <label for="{{ name }}">{{ label }}</label>
+                            <input type="number" name="{{ name }}" id="{{ name }}" step="0.01" required>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Calculate Risk</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 HealthRisk AI. All rights reserved.</p>
+            <p class="disclaimer">This tool is for educational purposes only and does not replace professional medical advice.</p>
+        </div>
+    </footer>
+</body>
+</html>

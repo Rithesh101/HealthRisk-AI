@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthRisk AI - Heart Risk</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-heartbeat">❤️</i>
+                <h1>HealthRisk AI</h1>
+            </div>
+            <p class="tagline">Early disease detection through AI-powered analysis</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="intro-section">
+            <h2>Heart Disease Risk Assessment</h2>
+            <p>Enter your heart-related health parameters below.</p>
+        </section>
+
+        <section class="form-section">
+            <div class="form-card">
+                <form action="{{ url_for('heart') }}" method="POST">
+                    <div class="form-info">
+                        <h3>Health Parameters</h3>
+                        <p>All fields are required for accurate prediction.</p>
+                    </div>
+
+                    <div class="form-grid">
+                        {% for label, name in [
+                            ("Age (years)", "age"),
+                            ("Sex (1 = Male, 0 = Female)", "sex"),
+                            ("Chest Pain Type (0–3)", "cp"),
+                            ("Resting Blood Pressure", "trestbps"),
+                            ("Cholesterol (mg/dL)", "chol"),
+                            ("Fasting Blood Sugar > 120 mg/dL (1 = Yes, 0 = No)", "fbs"),
+                            ("Resting ECG (0–2)", "restecg"),
+                            ("Max Heart Rate Achieved", "thalach"),
+                            ("Exercise Induced Angina (1 = Yes, 0 = No)", "exang"),
+                            ("ST Depression (Oldpeak)", "oldpeak"),
+                            ("Slope of ST Segment (0–2)", "slope"),
+                            ("Number of Major Vessels Colored (0–3)", "ca"),
+                            ("Thalassemia (1 = normal, 2 = fixed defect, 3 = reversible defect)", "thal")
+                        ] %}
+                        <div class="form-group">
+                            <label for="{{ name }}">{{ label }}</label>
+                            <input type="number" name="{{ name }}" id="{{ name }}" step="0.01" required>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Calculate Risk</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 HealthRisk AI. All rights reserved.</p>
+            <p class="disclaimer">This tool is for educational purposes only and does not replace professional medical advice.</p>
+        </div>
+    </footer>
+</body>
+</html>

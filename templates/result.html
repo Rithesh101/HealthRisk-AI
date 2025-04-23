@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthRisk AI - Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-heartbeat">❤️</i>
+                <h1>HealthRisk AI</h1>
+            </div>
+            <p class="tagline">Early disease detection through AI-powered analysis</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="intro-section">
+            <h2>Prediction Result</h2>
+            <p>Here is your disease risk assessment based on the data provided.</p>
+        </section>
+
+        <section class="form-section">
+            <div class="form-card">
+                <h3 class="result-status" style="color: {{ 'var(--danger-color)' if prediction == 1 else 'var(--success-color)' }}">
+                    {{ '⚠️ You may be at risk.' if prediction == 1 else '✅ You are likely not at risk.' }}
+                </h3>
+
+                <div class="form-group">
+                    <h4>Explanation (SHAP Summary)</h4>
+                    {% if shap_plot %}
+                        <img src="{{ url_for('static', filename='shap/' + shap_plot) }}" alt="SHAP Explanation" style="width: 100%; max-width: 800px;">
+                    {% else %}
+                        <p>No explanation available.</p>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <h4>Personalized Lifestyle Advice</h4>
+                    <ul>
+                        {% for advice in lifestyle_advice %}
+                            <li>{{ advice }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="form-group">
+                    <h4>Product Recommendations</h4>
+                    <ul>
+                        {% for product in product_recommendations %}
+                            <li>{{ product }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="form-group">
+                    <a href="{{ url_for('home') }}" class="btn btn-secondary">Back to Home</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 HealthRisk AI. All rights reserved.</p>
+            <p class="disclaimer">This tool is for educational purposes only and should not replace professional medical advice.</p>
+        </div>
+    </footer>
+</body>
+</html>
